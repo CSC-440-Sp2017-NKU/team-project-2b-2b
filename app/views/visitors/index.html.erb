@@ -1,0 +1,121 @@
+<!--<div class="loader"><div class="loader_html"></div></div>-->
+
+<div id="wrap" class="grid_1200">
+	
+
+	
+	<div id="welcome-banner" class="section-warp ask-me">
+		<div class="container clearfix">
+			<div class="box_icon box_warp box_no_border box_no_background" box_border="transparent" box_background="transparent" box_color="#FFF">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="welcome">
+							<h1>Welcome to <span style="font-style:italic;"><span style="font-weight:500;">NKU</span>Net</span></h1>
+							<h3>The Q&A resource for Northern Kentucky University students and faculty looking for guidance regarding course material. Ask a question, browse existing ones, and vote on answers to help fellow Norse solve their problems.</h3>
+						</div>
+					
+						<form class="form-style form-style-2">
+							<p>
+								<input type="text" id="question_title" placeholder="Ask a question..." >
+								<i class="icon-pencil"></i>
+								<span class="color button small publish-question">Ask Now</span>
+							</p>
+						</form>
+					</div>
+				</div><!-- End row -->
+			</div><!-- End box_icon -->
+		</div><!-- End container -->
+	</div><!-- End section-warp -->
+	
+	<section class="container main-content">
+		<div class="row">
+			<div class="col-md-9">
+				
+				<div class="tabs-warp question-tab">
+		            <ul class="tabs">
+		                <li class="tab"><a href="#" class="current">Recent Questions</a></li>
+		                <!--<li class="tab"><a href="#">Most Responses</a></li>
+		                <li class="tab"><a href="#">Recently Answered</a></li>
+		                <li class="tab"><a href="#">No answers</a></li>-->
+		            </ul>
+		            <div class="tab-inner-warp">
+						<div class="tab-inner">
+							<% @questions.each do |question| %>
+							<article class="question question-type-normal">
+								<h2>
+									<%= link_to question.title, question_path(question) %>
+								</h2>
+								<a class="question-report" href="#">Report</a>
+								<div class="question-type-main"><i class="icon-question-sign"></i>Question</div>
+								<div class="question-author">
+									<a href="<%= user_path(question.user.id) %>" original-title="<%= question.user.name %>" class="question-author-img tooltip-n"><span></span><img alt="" src="http://placehold.it/60x60/FFF/444"></a>
+								</div>
+								<div class="question-inner">
+									<div class="clearfix"></div>
+									<p class="question-desc"><%= truncate(question.description, length: 300) %></p>
+									<div class="question-details">
+										<span class="question-answered question-answered-done"><i class="icon-ok"></i>solved</span>
+									</div>
+									<span class="question-category"><a href="#"><i class="icon-folder-close"></i>CSC 440</a></span>
+									<span class="question-date"><i class="icon-time"></i><%= time_ago_in_words(question.created_at) %> ago</span>
+									<span class="question-comment"><a href="<%= question_path(question) %>#bio"><i class="icon-comment"></i><%= pluralize(question.answers.count, "Answer") %></a></span>
+									<div class="clearfix"></div>
+								</div>
+							</article>
+							<% end %>
+							
+							<a href="#" class="load-questions"><i class="icon-refresh"></i>Load More Questions</a>
+		      </div>
+		   </div>
+		            
+		        </div><!-- End page-content -->
+			</div><!-- End main -->
+			<aside class="col-md-3 sidebar">
+				<div class="widget widget_highest_points">
+					<h3 class="widget_title">Highest points</h3>
+					<ul>
+						<li>
+							<div class="author-img">
+								<a href="#"><img width="60" height="60" src="http://placehold.it/60x60/FFF/444" alt=""></a>
+							</div> 
+							<h6><a href="#">Jake</a></h6>
+							<span class="comment">12 Points</span>
+						</li>
+						<li>
+							<div class="author-img">
+								<a href="#"><img width="60" height="60" src="http://placehold.it/60x60/FFF/444" alt=""></a>
+							</div> 
+							<h6><a href="#">Dan</a></h6>
+							<span class="comment">10 Points</span>
+						</li>
+						<li>
+							<div class="author-img">
+								<a href="#"><img width="60" height="60" src="http://placehold.it/60x60/FFF/444" alt=""></a>
+							</div> 
+							<h6><a href="#">Trong</a></h6>
+							<span class="comment">5 Points</span>
+						</li>
+					</ul>
+				</div>
+				
+				<div class="widget">
+					<h3 class="widget_title">Recent Questions</h3>
+					<ul class="related-posts">
+						<% Question.order('created_at DESC').limit(2).each do |q| %>
+						<li class="related-item">
+							<h3><a href="#"><%= q.title %></a></h3>
+							<p><%= truncate(q.description, length: 70) %></p>
+							<div class="clear"></div><span><%= time_ago_in_words(q.created_at) %> ago</span>
+						</li>
+						<% end %>
+						
+					</ul>
+				</div>
+				
+			</aside><!-- End sidebar -->
+		</div><!-- End row -->
+	</section><!-- End container -->
+</div><!-- End wrap -->
+
+<div class="go-up"><i class="icon-chevron-up"></i></div>
+
