@@ -14,6 +14,8 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem "font-awesome-rails"
 gem 'rename'
+
+
 group :development, :test do
   gem 'byebug', platform: :mri
 end
@@ -32,11 +34,12 @@ group :development do
   gem 'better_errors'
   gem 'hub', :require=>nil
   gem 'rails_layout'
+  gem 'rails_real_favicon'
 end
 group :development, :test do
   gem 'sqlite3'
 end
 group :production do
   gem 'pg'
-  
+  gem 'rails_12factor'
 end

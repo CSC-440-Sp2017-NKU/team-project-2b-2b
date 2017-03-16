@@ -12,7 +12,18 @@ img {
   font-size: inherit;
   }
 .navbar-inverse {
-  background-color: #535353;
+  
+background: #F7971E; /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #F7971E , #FFD200); /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #F7971E , #FFD200); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  
+ 
+}
+.navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-brand {
+  color: #fff !important;
+}
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-brand:hover {
+  color: #9d9d9d !important;  
 }
 
 // THESE ARE EXAMPLES YOU CAN MODIFY
@@ -41,7 +52,7 @@ main {
   background-color: #eee;
   padding-bottom: 0;
   width: 100%;
-  margin-top: 51px; // accommodate the navbar
+  margin-top: 90px; // accommodate the navbar
   padding-left: 0;
   padding-right: 0;
   }
@@ -84,4 +95,15 @@ section {
   @extend .btn;
   @extend .btn-primary;
   @extend .btn-xs;
+}
+.navbar-brand {
+  margin-top: -10px;
+}
+.navbar-toggle {
+  margin-right: 30px !important;
+}
+@media screen and (max-width: 760px) {
+  .navbar-brand {
+    margin-left: 20px;
+  } 
 }

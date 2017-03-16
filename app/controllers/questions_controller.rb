@@ -57,7 +57,7 @@ class QuestionsController < ApplicationController
   def destroy
     @question.destroy
     respond_to do |format|
-      format.html { redirect_to questions_url, notice: 'Question was successfully destroyed.' }
+      format.html { redirect_to root_path, notice: 'Question was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -74,11 +74,8 @@ class QuestionsController < ApplicationController
     end
     
     def require_same_user
-      if (current_user != @question.user || !current_user.admin?)
-        respond_to do |format|
-          format.html { redirect_to question_path(@question), notice: "You do not have access to modify this question"}
-          format.json { render json: @question.errors, status: :unprocessable_entity }
-        end
+      if ((current_user != @question.user) && (!current_user.admin?))
+         redirect_to question_path(@question), notice: "You do not have access to modify this question"
       end
     end
 end
