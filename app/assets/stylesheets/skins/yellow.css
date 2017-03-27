@@ -27,6 +27,7 @@ p a,li a, a:hover,.button.normal:hover,span.color,#footer a:hover,.widget a:hove
 }
 .tab a.current {
 	border-top-color: #FFC72C;
+    background-color: #b3b3b3;
 }
 .tabs-vertical .tab a.current,blockquote {
 	border-right-color: #FFC72C;

@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :set_answer, only: [:edit, :update, :destroy]
+  before_action :set_answer, only: [:edit, :update, :destroy, :upvote, :downvote]
   before_action :authenticate_user!
   before_action :require_same_user, only: [:edit, :update, :destroy]
 
@@ -53,6 +53,16 @@ class AnswersController < ApplicationController
     end
   end
 
+  def upvote
+    current_user.likes @answer
+    redirect_to :back
+  end
+
+  def downvote
+    current_user.dislikes @answer
+    redirect_to :back
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_answer
@@ -65,11 +75,13 @@ class AnswersController < ApplicationController
     end
     
     def require_same_user
-      if (current_user != @answer.user && !current_user.admin?)
+      if current_user != @answer.user && !current_user.admin?
         respond_to do |format|
           format.html { redirect_to question_path(@answer.question), notice: "You do not have access to modify this answer"}
           format.json { render json: @answer.errors, status: :unprocessable_entity }
         end
       end
     end
+
+
 end

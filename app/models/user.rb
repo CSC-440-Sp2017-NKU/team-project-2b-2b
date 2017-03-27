@@ -3,6 +3,7 @@ class User < ApplicationRecord
   after_initialize :set_default_role, :if => :new_record?
   has_many :questions, dependent: :destroy
   has_many :answers, dependent: :destroy
+  acts_as_voter
 
   def set_default_role
     self.role ||= :user
