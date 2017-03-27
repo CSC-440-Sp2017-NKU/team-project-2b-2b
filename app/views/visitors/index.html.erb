@@ -11,9 +11,13 @@
 		                <li class="tab"><a href="#">Recently Answered</a></li>
 		                <li class="tab"><a href="#">No answers</a></li>-->
 		            </ul>
+                  <div class="row" align="center"><%= will_paginate @questions %></div>
+
 		            <div class="tab-inner-warp">
+
 						<div class="tab-inner">
-							<% @questions.each do |question| %>
+
+              <% @questions.each do |question| %>
 							<article class="question question-type-normal">
 								<h2>
 									<%= link_to question.title, question_path(question) %>
@@ -44,8 +48,9 @@
 								</div>
 							</article>
 							<% end %>
-							
-							<a href="#" class="load-questions"><i class="icon-refresh"></i>Load More Questions</a>
+              <div align="center">
+                <%= will_paginate @questions %>
+              </div>
 		      </div>
 		   </div>
 		            
@@ -60,7 +65,7 @@
 								<a href="#"><img width="60" height="60" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-48.png" alt=""></a>
 							</div> 
 							<h6><a href="#">Jake</a></h6>
-							<span class="comment">12 Points</span>
+							<span class="comment">3000 Points</span>
 						</li>
 						<li>
 							<div class="author-img">
@@ -74,7 +79,7 @@
 								<a href="#"><img width="60" height="60" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-48.png" alt=""></a>
 							</div> 
 							<h6><a href="#">Trong</a></h6>
-							<span class="comment">5 Points</span>
+							<span class="comment">-5 Points</span>
 						</li>
 					</ul>
 				</div>

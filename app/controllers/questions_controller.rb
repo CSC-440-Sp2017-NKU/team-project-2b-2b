@@ -4,8 +4,9 @@ class QuestionsController < ApplicationController
   before_action :require_same_user, only: [:edit, :update, :destroy]
   # GET /questions
   # GET /questions.json
+
   def index
-    @questions = Question.all
+    @questions = Question.paginate(page: params[:page], per_page: 5).order('updated_at DESC')
   end
 
   # GET /questions/1
@@ -74,7 +75,7 @@ class QuestionsController < ApplicationController
     end
     
     def require_same_user
-      if ((current_user != @question.user) && (!current_user.admin?))
+      if (current_user != @question.user) && (!current_user.admin?)
          redirect_to question_path(@question), notice: "You do not have access to modify this question"
       end
     end

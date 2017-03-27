@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :authorize_admin, only: [:new, :create]
+  before_action :authorize_admin, only: [:new, :create, :destroy]
 
   def index
     @users = User.all
@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    authorize @user
+    authorize current_user
   end
   
   def create

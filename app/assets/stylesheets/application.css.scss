@@ -742,7 +742,7 @@ div[class*="slider_shadow"]:before, div[class^="header_shadow"] {
 	margin-left: 101px;
 }
 .question-tab .tabs {
-	margin-bottom: 30px;
+	margin-bottom: 0px;
 }
 .question-tab .tab a {
 	color: #2f3239;
@@ -5316,4 +5316,22 @@ a.question-type-main,a.question-report {
 }
 .red-bg:hover {
 	background-color: red !important;
+}
+.green {
+    color: limegreen !important;
+}
+.pagination {
+  float: none;
+}
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+  background-color: #FFC72C;
+  border-color: #FFC72C;
+}
+
+.pagination > li > a, .pagination > li > span {
+  color: #545454;
+}
+
+.pagination > li > a:hover, .pagination > li > a:focus, .pagination > li > span:hover, .pagination > li > span:focus {
+  color: #d09d2a;
 }

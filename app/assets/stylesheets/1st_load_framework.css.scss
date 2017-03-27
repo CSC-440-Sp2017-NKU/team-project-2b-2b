@@ -12,10 +12,12 @@ img {
   font-size: inherit;
   }
 .navbar-inverse {
-  
-background: #F7971E; /* fallback for old browsers */
-background: -webkit-linear-gradient(to left, #F7971E , #FFD200); /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to left, #F7971E , #FFD200); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+
+  background: #000000; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #000000 , #434343); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #000000 , #434343); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   
  
 }
@@ -23,7 +25,7 @@ background: linear-gradient(to left, #F7971E , #FFD200); /* W3C, IE 10+/ Edge, F
   color: #fff !important;
 }
 .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-brand:hover {
-  color: #9d9d9d !important;  
+  color: #FFC72C !important;
 }
 
 // THESE ARE EXAMPLES YOU CAN MODIFY

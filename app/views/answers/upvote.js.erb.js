@@ -1,0 +1,1 @@
+$(".answer-<%=@answer.id%>").html('<%= @answer.votes.count.to_s %>');
