@@ -44,7 +44,7 @@
 						<span class="question-date"><i class="icon-time"></i>Created <%= @question.created_at.strftime("%b %e %Y") %></span>
 						<span class="question-comment"><a href="#bio"><i class="icon-comment"></i><%= pluralize(@question.answers.count, "Answer") %></a></span>
             <% @question_vote_difference = @question.get_upvotes.size - @question.get_downvotes.size %>
-            <span class="single-question-vote-result
+            <span id="question-<%= @question.id %>" class="single-question-vote-result
               <% if @question_vote_difference > 0 %>
                 green
               <% elsif @question_vote_difference < 0 %>
@@ -55,18 +55,18 @@
 						<ul class="single-question-vote">
               <% if @question.user != current_user %>
                   <li>
-                    <%= link_to(dislike_question_path(@question), method: :put, class:'single-question-vote-down' + ((current_user.voted_down_on? @question) ? ' red' : '')) do %>
+                    <%= link_to(dislike_question_path(@question), method: :put, :remote=>true, class:'single-question-vote-down vote' + ((current_user.voted_down_on? @question) ? ' red' : '')) do %>
                         <i class="icon-thumbs-down"></i>
                     <% end %>
                   </li>
                   <li>
-                    <%= link_to(like_question_path(@question), method: :put, class:'single-question-vote-up' + ((current_user.voted_up_on? @question) ? ' green' : '')) do %>
+                    <%= link_to(like_question_path(@question), method: :put, :remote=>true, class:'single-question-vote-up vote' + ((current_user.voted_up_on? @question) ? ' green' : '')) do %>
                         <i class="icon-thumbs-up"></i>
                     <% end %>
                   </li>
               <% else %>
-                  <li><div class="single-question-vote-down" title="Dislike"><i class="icon-thumbs-down"></i></div></li>
-                  <li><div class="single-question-vote-up" title="Like"><i class="icon-thumbs-up"></i></div></li>
+                  <li><div class="single-question-vote-down gray gray-hover" title="Dislike"><i class="icon-thumbs-down"></i></div></li>
+                  <li><div class="single-question-vote-up gray gray-hover " title="Like"><i class="icon-thumbs-up"></i></div></li>
               <% end%>
 
 						</ul>
@@ -102,16 +102,16 @@
 					                	<div class="comment-vote">
 						                	<ul class="question-vote">
                                 <% if answer.user != current_user %>
-									                <%= link_to '', like_answer_path(answer), method: :put, class:'question-vote-up' + ((current_user.voted_up_on? answer) ? ' green' : '') %>
-									                <%= link_to '', dislike_answer_path(answer), method: :put, class:'question-vote-down' + ((current_user.voted_down_on? answer) ? ' red' : '') %>
+									                <%= link_to '', like_answer_path(answer), method: :put, :remote=>true, class:'question-vote-up' + ((current_user.voted_up_on? answer) ? ' green' : '') %>
+									                <%= link_to '', dislike_answer_path(answer), method: :put, :remote=>true, class:'question-vote-down' + ((current_user.voted_down_on? answer) ? ' red' : '') %>
                                 <% else %>
-                                  <div class="question-vote-up"></div>
-                                  <div class="question-vote-down"></div>
+                                  <div class="question-vote-up gray"></div>
+                                  <div class="question-vote-down gray"></div>
                                 <% end%>
 						                	</ul>
 					                	</div>
                             <% @answer_vote_difference = answer.get_upvotes.size - answer.get_downvotes.size %>
-                              <span class="question-vote-result
+                              <span id="answer-vote-<%= answer.id %>" class="question-vote-result
                                 <% if @answer_vote_difference > 0 %>
                                   green
                                 <% elsif @answer_vote_difference < 0 %>
@@ -170,14 +170,7 @@
 				    	<% end %>
 				</div>
 				
-				<div class="post-next-prev clearfix">
-				    <p class="prev-post">
-				        <a href="#"><i class="icon-double-angle-left"></i>&nbsp;Prev question</a>
-				    </p>
-				    <p class="next-post">
-				        <a href="#">Next question&nbsp;<i class="icon-double-angle-right"></i></a>                                
-				    </p>
-				</div><!-- End post-next-prev -->	
+
 			</div><!-- End main -->
 			<aside class="col-md-3 sidebar">
 				<div class="widget">
@@ -232,5 +225,6 @@
 			$('#editAnswerForm' + id).show();
 		}
 	}
-					      
+
+
 </script>

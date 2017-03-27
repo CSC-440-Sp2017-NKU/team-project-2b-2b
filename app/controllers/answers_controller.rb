@@ -56,11 +56,13 @@ class AnswersController < ApplicationController
   def upvote
     current_user.likes @answer
     redirect_to :back
+    flash[:notice] = 'Answer successfully upvoted'
   end
 
   def downvote
     current_user.dislikes @answer
     redirect_to :back
+    flash[:danger] = 'Answer successfully downvoted'
   end
 
   private

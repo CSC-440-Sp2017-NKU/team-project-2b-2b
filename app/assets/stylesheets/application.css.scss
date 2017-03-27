@@ -656,9 +656,9 @@ div[class*="slider_shadow"]:before, div[class^="header_shadow"] {
 	padding: 20px;
 	border: 1px solid #dedede;
 	background: #FFF;
-	-moz-box-shadow: 0 0 5px #dedede;
-	-webkit-box-shadow: 0 0 5px #dedede;
-	box-shadow: 0 0 5px #dedede;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 .page-content .widget,.widget .related-posts {
 	padding: 0 !important;
@@ -721,7 +721,7 @@ div[class*="slider_shadow"]:before, div[class^="header_shadow"] {
 	background: #FFF;
 }
 /* question */
-.question {
+.question, .question-index {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -729,11 +729,20 @@ div[class*="slider_shadow"]:before, div[class^="header_shadow"] {
 	padding: 20px;
 	border: 1px solid #dedede;
 	background: #FFF;
-	-moz-box-shadow: 0 0 5px #dedede;
-	-webkit-box-shadow: 0 0 5px #dedede;
-	box-shadow: 0 0 5px #dedede;
-	position: relative;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    position: relative;
 }
+
+.question-index:hover {
+  -moz-box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22) !important;
+  -webkit-box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22) !important;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22) !important;
+
+}
+
 .tab-inner .question:first-child {
 	margin-top: 0;
 }
@@ -1474,7 +1483,7 @@ div[class*="slider_shadow"]:before, div[class^="header_shadow"] {
 .about-author {
 	overflow: hidden;
 	display: block;
-	margin: 0 0 30px;
+	margin: 30px 0 30px;
 }
 .author-image {
 	float: left;
@@ -1818,9 +1827,9 @@ div[class*="slider_shadow"]:before, div[class^="header_shadow"] {
 	padding: 20px;
 	border: 1px solid #dedede;
 	background: #FFF;
-	-moz-box-shadow: 0 0 5px #dedede;
-	-webkit-box-shadow: 0 0 5px #dedede;
-	box-shadow: 0 0 5px #dedede;
+    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 .widget:last-child {
 	margin-bottom: 0;
@@ -5322,18 +5331,30 @@ a.question-type-main,a.question-report {
 .green {
     color: #338338 !important;
 }
+.gray {
+    color: #a1a1a1 !important;
+}
+.gray-hover:hover {
+    background-color: #eee !important;
+}
 .pagination {
-  float: none;
+    float: none;
 }
 .pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
-  background-color: #FFC72C;
-  border-color: #FFC72C;
+    background-color: #FFC72C;
+    border-color: #FFC72C;
 }
 
 .pagination > li > a, .pagination > li > span {
-  color: #545454;
+    color: #545454;
 }
 
 .pagination > li > a:hover, .pagination > li > a:focus, .pagination > li > span:hover, .pagination > li > span:focus {
-  color: #d09d2a;
+    color: #d09d2a;
+}
+#respond {
+    margin-bottom: 30px;
+}
+#new_question {
+    margin-bottom: 30px;
 }
