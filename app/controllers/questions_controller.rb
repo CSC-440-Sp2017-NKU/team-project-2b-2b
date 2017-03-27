@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :edit, :update, :destroy]
+  before_action :set_question, only: [:show, :edit, :update, :destroy, :upvote, :downvote]
   before_action :authenticate_user!
   before_action :require_same_user, only: [:edit, :update, :destroy]
   # GET /questions
@@ -61,6 +61,16 @@ class QuestionsController < ApplicationController
       format.html { redirect_to root_path, notice: 'Question was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def upvote
+    current_user.likes @question
+    redirect_to :back
+  end
+
+  def downvote
+    current_user.dislikes @question
+    redirect_to :back
   end
 
   private

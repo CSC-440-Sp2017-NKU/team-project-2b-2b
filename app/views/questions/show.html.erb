@@ -43,10 +43,32 @@
 						<span class="question-category"><a href="#"><i class="icon-folder-close"></i>CSC 440</a></span>
 						<span class="question-date"><i class="icon-time"></i>Created <%= @question.created_at.strftime("%b %e %Y") %></span>
 						<span class="question-comment"><a href="#bio"><i class="icon-comment"></i><%= pluralize(@question.answers.count, "Answer") %></a></span>
-						<span class="single-question-vote-result">+22</span>
+            <% @question_vote_difference = @question.get_upvotes.size - @question.get_downvotes.size %>
+            <span class="single-question-vote-result
+              <% if @question_vote_difference > 0 %>
+                green
+              <% elsif @question_vote_difference < 0 %>
+                red
+              <% else %>
+              <% end %>">
+              <%= @question_vote_difference %></span>
 						<ul class="single-question-vote">
-							<li><a href="#" class="single-question-vote-down" title="Dislike"><i class="icon-thumbs-down"></i></a></li>
-							<li><a href="#" class="single-question-vote-up" title="Like"><i class="icon-thumbs-up"></i></a></li>
+              <% if @question.user != current_user %>
+                  <li>
+                    <%= link_to(dislike_question_path(@question), method: :put, class:'single-question-vote-down' + ((current_user.voted_down_on? @question) ? ' red' : '')) do %>
+                        <i class="icon-thumbs-down"></i>
+                    <% end %>
+                  </li>
+                  <li>
+                    <%= link_to(like_question_path(@question), method: :put, class:'single-question-vote-up' + ((current_user.voted_up_on? @question) ? ' green' : '')) do %>
+                        <i class="icon-thumbs-up"></i>
+                    <% end %>
+                  </li>
+              <% else %>
+                  <li><div class="single-question-vote-down" title="Dislike"><i class="icon-thumbs-down"></i></div></li>
+                  <li><div class="single-question-vote-up" title="Like"><i class="icon-thumbs-up"></i></div></li>
+              <% end%>
+
 						</ul>
 						<div class="clearfix"></div>
 					</div>
@@ -79,7 +101,6 @@
 					                	<div class="comment-author"><%= link_to answer.user.name, user_path(answer.user) %></div>
 					                	<div class="comment-vote">
 						                	<ul class="question-vote">
-                                <!-- TODO -->
                                 <% if answer.user != current_user %>
 									                <%= link_to '', like_answer_path(answer), method: :put, class:'question-vote-up' + ((current_user.voted_up_on? answer) ? ' green' : '') %>
 									                <%= link_to '', dislike_answer_path(answer), method: :put, class:'question-vote-down' + ((current_user.voted_down_on? answer) ? ' red' : '') %>
@@ -89,15 +110,16 @@
                                 <% end%>
 						                	</ul>
 					                	</div>
-                            <% @vote_difference = answer.get_upvotes.size - answer.get_downvotes.size %>
+                            <% @answer_vote_difference = answer.get_upvotes.size - answer.get_downvotes.size %>
                               <span class="question-vote-result
-                                <% if @vote_difference > 0 %>
+                                <% if @answer_vote_difference > 0 %>
                                   green
-                                <% elsif @vote_difference < 0 %>
+                                <% elsif @answer_vote_difference < 0 %>
                                   red
                                 <% else %>
                                 <% end %>">
-                              <%= @vote_difference %></span>
+                                <%= @answer_vote_difference %>
+                              </span>
 
 					                	<div class="comment-meta">
 					                        <div class="date"><i class="icon-time"></i><%= answer.created_at.strftime("%b %e %Y %l:%M %p") %></div> 

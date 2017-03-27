@@ -742,16 +742,18 @@ div[class*="slider_shadow"]:before, div[class^="header_shadow"] {
 	margin-left: 101px;
 }
 .question-tab .tabs {
-	margin-bottom: 0px;
+	margin-bottom: 10px;
 }
 .question-tab .tab a {
-	color: #2f3239;
+	color: #fff;
 	font-size: 15px;
 	font-weight: normal;
+  text-decoration: none;
 	
 }
 .question-tab .tab a:hover {
-	color: #2f3239;
+	color: #fff;
+    text-decoration: none;
 }
 .question-tab .tab a.current:hover {
 	color: #FFF;
@@ -5312,13 +5314,13 @@ a.question-type-main,a.question-report {
 	margin-left: 15px;
 }
 .red {
-	color: red !important;
+	color: #990707 !important;
 }
 .red-bg:hover {
-	background-color: red !important;
+	background-color: #990707 !important;
 }
 .green {
-    color: limegreen !important;
+    color: #338338 !important;
 }
 .pagination {
   float: none;
