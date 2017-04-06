@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :courses
   resources :answers do
     member do
       put 'like', to: 'answers#upvote'

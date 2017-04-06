@@ -1,0 +1,81 @@
+<div id="wrap" class="grid_1200">
+
+  <section class="container main-content">
+    <div class="row">
+      <div class="col-md-9">
+
+        <div class="page-content page-content-user">
+          <div class="user-questions">
+            <% @depts.each do |dept| %>
+            <article class="question user-question">
+              <h3>
+                <%= dept.prefix %>
+              </h3>
+              <div class="question-type-main"><i class="icon-question-sign"></i>Question</div>
+              <div class="question-content">
+                <div class="question-bottom">
+                  <div class="question-answered"><i class="icon-ok"></i>in progress</div>
+                  <span class="question-favorite"><i class="icon-star"></i>5</span>
+                  <span class="question-category"><a href="#"><i class="icon-folder-close"></i>wordpress</a></span>
+                  <span class="question-date"><i class="icon-time"></i>15 secs ago</span>
+                  <span class="question-comment"><a href="#"><i class="icon-comment"></i>5 Answers</a></span>
+                  <a class="question-reply" href="#"><i class="icon-reply"></i>Reply</a>
+                  <span class="question-view"><i class="icon-user"></i>70 views</span>
+                </div>
+              </div>
+            </article>
+            <% end %>
+          </div>
+        </div>
+      </div><!-- End main -->
+      <aside class="col-md-3 sidebar">
+        <div class="widget widget_highest_points">
+          <h3 class="widget_title">Highest points</h3>
+          <ul>
+            <li>
+              <div class="author-img">
+                <a href="#"><img width="60" height="60" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-48.png" alt=""></a>
+              </div>
+              <h6><a href="#">Jake</a></h6>
+              <span class="comment">3000 Points</span>
+            </li>
+            <li>
+              <div class="author-img">
+                <a href="#"><img width="60" height="60" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-48.png" alt=""></a>
+              </div>
+              <h6><a href="#">Dan</a></h6>
+              <span class="comment">10 Points</span>
+            </li>
+            <li>
+              <div class="author-img">
+                <a href="#"><img width="60" height="60" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-48.png" alt=""></a>
+              </div>
+              <h6><a href="#">Trong</a></h6>
+              <span class="comment">-5 Points</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="widget">
+          <h3 class="widget_title">Recent Questions</h3>
+          <ul class="related-posts">
+            <% Question.order('updated_at DESC').limit(2).each do |q| %>
+                <li class="related-item">
+                  <h3><a href="#"><%= q.title %></a></h3>
+                  <p><%= truncate(q.description, length: 70) %></p>
+                  <div class="clear"></div><span><%= q.updated_at.strftime("%b %e %Y %l:%M %p") %></span>
+                </li>
+            <% end %>
+
+          </ul>
+        </div>
+
+      </aside><!-- End sidebar -->
+    </div><!-- End row -->
+  </section><!-- End container -->
+</div><!-- End wrap -->
+
+<div class="go-up"><i class="icon-chevron-up"></i></div>
+
+
+
