@@ -38,6 +38,7 @@ group :development do
   gem 'rails_layout'
   gem 'rails_real_favicon'
   gem 'meta_request'
+  gem 'binding_of_caller'
 end
 group :development, :test do
   gem 'sqlite3'

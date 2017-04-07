@@ -1,13 +1,12 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :last_activity]
 
   # GET /courses
   # GET /courses.json
   def index
     @courses = Course.all
     @depts = []
-    @depts = @courses.each {|course| @depts << course.prefix}.uniq
-    print(@depts[0])
+    @depts = @courses.uniq.pluck(:prefix)
   end
 
   # GET /courses/1
@@ -28,7 +27,6 @@ class CoursesController < ApplicationController
   # POST /courses.json
   def create
     @course = Course.new(course_params)
-
     respond_to do |format|
       if @course.save
         format.html { redirect_to @course, notice: 'Course was successfully created.' }
@@ -53,6 +51,8 @@ class CoursesController < ApplicationController
       end
     end
   end
+
+
 
   # DELETE /courses/1
   # DELETE /courses/1.json

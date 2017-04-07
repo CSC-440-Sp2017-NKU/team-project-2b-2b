@@ -2,29 +2,30 @@
 
   <section class="container main-content">
     <div class="row">
-      <div class="col-md-9">
-
+      <div class="col-md-9 dept">
         <div class="page-content page-content-user">
           <div class="user-questions">
             <% @depts.each do |dept| %>
-            <article class="question user-question">
-              <h3>
-                <%= dept.prefix %>
-              </h3>
-              <div class="question-type-main"><i class="icon-question-sign"></i>Question</div>
-              <div class="question-content">
-                <div class="question-bottom">
-                  <div class="question-answered"><i class="icon-ok"></i>in progress</div>
-                  <span class="question-favorite"><i class="icon-star"></i>5</span>
-                  <span class="question-category"><a href="#"><i class="icon-folder-close"></i>wordpress</a></span>
-                  <span class="question-date"><i class="icon-time"></i>15 secs ago</span>
-                  <span class="question-comment"><a href="#"><i class="icon-comment"></i>5 Answers</a></span>
-                  <a class="question-reply" href="#"><i class="icon-reply"></i>Reply</a>
-                  <span class="question-view"><i class="icon-user"></i>70 views</span>
+              <% @dept_courses = @courses.select{|c| c.prefix == dept} %>
+              <article class="question user-question">
+                <div class="col-md-1 dept-arrow">
+                  <span><i class="icon-chevron-right"></i></span>
                 </div>
-              </div>
-            </article>
-            <% end %>
+                <div class="col-md-11 dept-desc">
+                  <h3>
+                    <%= dept + " - " + @dept_courses.first.dept %>
+                  </h3>
+                  <span class="question-category"><i class="icon-folder-close"></i><%= pluralize(@dept_courses.count, "Course") %></span>
+                  <span class="question-comment"><i class="icon-comment"></i><%= pluralize(question_count(@dept_courses), "Question") %></span>
+                  <span class="question-view"><i class="icon-user"></i><%= pluralize(user_count(@dept_courses), "User") %></span>
+                  <!--<div class="question-content">
+                    <div class="question-bottom">
+                      <span class="question-date"><i class="icon-time"></i>#"Last activity: " + last_activity(course) </span>
+                    </div>
+                  </div>-->
+                </div>
+              </article>
+              <% end %>
           </div>
         </div>
       </div><!-- End main -->
@@ -51,7 +52,7 @@
                 <a href="#"><img width="60" height="60" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-48.png" alt=""></a>
               </div>
               <h6><a href="#">Trong</a></h6>
-              <span class="comment">-5 Points</span>
+              <span class="comment">-5,000,000 Points</span>
             </li>
           </ul>
         </div>
