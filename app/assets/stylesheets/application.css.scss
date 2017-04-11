@@ -736,12 +736,7 @@ div[class*="slider_shadow"]:before, div[class^="header_shadow"] {
     position: relative;
 }
 
-.question-index:hover {
-  -moz-box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22) !important;
-  -webkit-box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22) !important;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22) !important;
 
-}
 
 .tab-inner .question:first-child {
 	margin-top: 0;
@@ -5291,10 +5286,10 @@ html[xmlns] .slides {
 }
 
 #welcome-banner {
-  background: 
-    /* top, transparent red, faked with gradient */ 
+  background:
+    /* top, transparent red, faked with gradient */
     linear-gradient(
-      rgba(255, 187, 0, 0.80), 
+      rgba(255, 187, 0, 0.80),
       rgba(255, 187, 0, 0.80)
     ),
     /* bottom, image */
@@ -5360,6 +5355,7 @@ a.question-type-main,a.question-report {
 }
 .user-question {
   padding: 0;
+  border-top: 1px solid #dedede;
 }
 .user-question h3 {
   margin-bottom: 10px;
@@ -5397,4 +5393,20 @@ a.question-type-main,a.question-report {
 .dept-desc .page-content {
   box-shadow: none !important;
   border:none !important;
+}
+.icon-chevron-down {
+  color: #FFC72C;
+  margin-left:25% !important;
+}
+[id^="dept-courses"] ul {
+  margin: 20px 0 20px 80px;
+}
+
+[id^="dept-courses"] ul li {
+  margin-top: 10px;
+}
+
+[id^="dept-courses"] a {
+  color: #000;
+
 }

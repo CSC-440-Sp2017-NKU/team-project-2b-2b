@@ -75,20 +75,20 @@ class QuestionsController < ApplicationController
     flash[:danger] = 'Question successfully downvoted'
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_question
-      @question = Question.find(params[:id])
-    end
+private
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def question_params
-      params.require(:question).permit(:title, :description)
+  def set_question
+    @question = Question.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def question_params
+    params.require(:question).permit(:title, :description)
+  end
+
+  def require_same_user
+    if (current_user != @question.user) && (!current_user.admin?)
+       redirect_to question_path(@question), notice: "You do not have access to modify this question"
     end
-    
-    def require_same_user
-      if (current_user != @question.user) && (!current_user.admin?)
-         redirect_to question_path(@question), notice: "You do not have access to modify this question"
-      end
-    end
+  end
 end

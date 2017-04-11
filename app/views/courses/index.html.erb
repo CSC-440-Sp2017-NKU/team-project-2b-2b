@@ -1,5 +1,4 @@
 <div id="wrap" class="grid_1200">
-
   <section class="container main-content">
     <div class="row">
       <div class="col-md-9 dept">
@@ -8,16 +7,16 @@
             <% @depts.each do |dept| %>
               <% @dept_courses = @courses.select{|c| c.prefix == dept} %>
               <article class="question user-question">
-                <div class="col-md-1 dept-arrow">
-                  <span><i class="icon-chevron-right"></i></span>
+                <div class="col-xs-1 dept-arrow dept-arrow-<%= dept %>">
+                  <a onclick="showDeptCourses('<%= dept %>')"><span><i id="dept-icon-<%= dept %>" class="icon-chevron-right"></i></span></a>
                 </div>
-                <div class="col-md-11 dept-desc">
+                <div class="col-xs-11 dept-desc">
                   <h3>
-                    <%= dept + " - " + @dept_courses.first.dept %>
+                    <%= dept + ' - ' + @dept_courses.first.dept %>
                   </h3>
-                  <span class="question-category"><i class="icon-folder-close"></i><%= pluralize(@dept_courses.count, "Course") %></span>
-                  <span class="question-comment"><i class="icon-comment"></i><%= pluralize(question_count(@dept_courses), "Question") %></span>
-                  <span class="question-view"><i class="icon-user"></i><%= pluralize(user_count(@dept_courses), "User") %></span>
+                  <span class="question-category"><i class="icon-folder-close"></i><%= pluralize(@dept_courses.count, 'Course') %></span>
+                  <span class="question-comment"><i class="icon-comment"></i><%= pluralize(question_count(@dept_courses), 'Question') %></span>
+                  <span class="question-view"><i class="icon-user"></i><%= pluralize(user_count(@dept_courses), 'User') %></span>
                   <!--<div class="question-content">
                     <div class="question-bottom">
                       <span class="question-date"><i class="icon-time"></i>#"Last activity: " + last_activity(course) </span>
@@ -25,6 +24,13 @@
                   </div>-->
                 </div>
               </article>
+              <div id="dept-courses-<%= dept %>">
+                <ul>
+                  <% @dept_courses.each do |course| %>
+                    <li><%= link_to course.prefix + ' ' + course.number.to_s + ' - ' + course.title+  ' ( ' + pluralize(course.questions.count, 'Question') + ' ) ', course_path(course) %></li>
+                  <% end %>
+                </ul>
+              </div>
               <% end %>
           </div>
         </div>
@@ -78,5 +84,19 @@
 
 <div class="go-up"><i class="icon-chevron-up"></i></div>
 
+<script>
+    $("[id^=dept-courses]").hide();
+    var deptIcon = $("[id^=dept-icon]");
+    deptIcon.removeClass();
+    deptIcon.addClass("icon-chevron-right");
+
+    function showDeptCourses(dept) {
+        var deptCourses = $('#dept-courses-' + dept);
+        var deptIcon = $("#dept-icon-" + dept );
+        deptCourses.toggle();
+        deptIcon.toggleClass( "icon-chevron-right");
+        deptIcon.toggleClass( "icon-chevron-down");
+    }
+</script>
 
 
