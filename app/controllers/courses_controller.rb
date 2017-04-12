@@ -12,8 +12,8 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
-    @questions = @course.questions.paginate(page: params[:page], per_page: 5).order('updated_at DESC')
-    @users = @course.users.paginate(page: params[:page], per_page: 1).order('name')
+    @questions = @course.questions.paginate(page: params[:questions_page], per_page: 5).order('updated_at DESC')
+    @users = @course.users.paginate(page: params[:users_page], per_page: 5).order('name')
   end
 
   # GET /courses/new

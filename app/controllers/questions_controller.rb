@@ -83,7 +83,7 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def question_params
-    params.require(:question).permit(:title, :description)
+    params.require(:question).permit(:title, :description, :image)
   end
 
   def require_same_user

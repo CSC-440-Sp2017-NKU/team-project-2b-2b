@@ -36,11 +36,13 @@
 					<div class="question-inner">
 						<div class="clearfix"></div>
 						<div class="question-desc">
-						  <p><%= @question.description %><p></div>
+						  <p><%= @question.description %><p>
+              <%= link_to image_tag(@question.image.url(:thumb), class: 'media-object'), @question.image.url, target: '_blank' %>
+            </div>
 						<div class="question-details">
 							<span class="question-answered question-answered-done"><i class="icon-ok"></i>solved</span>
 						</div>
-						<span class="question-category"><a href="#"><i class="icon-folder-close"></i>CSC 440</a></span>
+						<span class="question-category"><a href="<%= course_path(@question.course) %>"><i class="icon-folder-close"></i>CSC 440</a></span>
 						<span class="question-date"><i class="icon-time"></i>Created <%= @question.created_at.strftime("%b %e %Y") %></span>
 						<span class="question-comment"><a href="#bio"><i class="icon-comment"></i><%= pluralize(@question.answers.count, "Answer") %></a></span>
             <% @question_vote_difference = @question.get_upvotes.size - @question.get_downvotes.size %>

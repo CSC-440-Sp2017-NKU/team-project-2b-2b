@@ -36,7 +36,16 @@
   									</span>
   									<span class="form-description">Please choose an appropriate course from your list of classes.</span>
   								</p>
-  								
+                    <label><%= f.label :attachment %></label>
+                    <div class="fileinputs">
+                      <!--<input type="file" class="file">-->
+                      <div class="fakefile">
+                        <%= f.file_field :image %>
+                        <!--<button type="button" class="button small margin_0">Select file</button>
+                        <span><i class="icon-arrow-up"></i>Browse</span>-->
+                      </div>
+                    </div>
+
   								<div class="clearfix"></div>
   							</div>
   							<div id="form-textarea">
