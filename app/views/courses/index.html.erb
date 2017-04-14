@@ -37,29 +37,17 @@
       </div><!-- End main -->
       <aside class="col-md-3 sidebar">
         <div class="widget widget_highest_points">
-          <h3 class="widget_title">Highest points</h3>
+          <h3 class="widget_title">Top Users at NKU</h3>
           <ul>
-            <li>
-              <div class="author-img">
-                <a href="#"><img width="60" height="60" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-48.png" alt=""></a>
-              </div>
-              <h6><a href="#">Jake</a></h6>
-              <span class="comment">3000 Points</span>
-            </li>
-            <li>
-              <div class="author-img">
-                <a href="#"><img width="60" height="60" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-48.png" alt=""></a>
-              </div>
-              <h6><a href="#">Dan</a></h6>
-              <span class="comment">10 Points</span>
-            </li>
-            <li>
-              <div class="author-img">
-                <a href="#"><img width="60" height="60" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-48.png" alt=""></a>
-              </div>
-              <h6><a href="#">Trong</a></h6>
-              <span class="comment">-5,000,000 Points</span>
-            </li>
+            <% @top_users.each do |user| %>
+              <li>
+                <div class="author-img">
+                  <a href="#"><img width="60" height="60" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-48.png" alt=""></a>
+                </div>
+                <h6><%= link_to user.name, user_path(user) %></h6>
+                <span class="comment"><%= user.reputation %> Points</span>
+              </li>
+            <% end %>
           </ul>
         </div>
 

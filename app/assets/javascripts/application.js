@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require bootstrap-sprockets
 //= require_tree .
 //= require cable.js
@@ -27,6 +26,8 @@
 //= require jquery.nav.js
 //= require jquery.prettyPhoto.js
 //= require jquery.scrollTo.js
+//= require jquery.tablesorter.min.js
+//= require jquery-latest.js
 //= require jquery.tipsy.js
 //= require tabs.js
 //= require tags.js

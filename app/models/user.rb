@@ -10,6 +10,13 @@ class User < ApplicationRecord
     self.role ||= :user
   end
 
+  def reputation
+    rep = 0
+    questions.each { |q| rep += (q.get_upvotes.size * 30) - (q.get_downvotes.size * 20) }
+    answers.each { |a| rep += (a.get_upvotes.size * 30) - (a.get_downvotes.size * 20) }
+    rep += questions.count * 10 + answers.count * 15 + sign_in_count * 5
+    rep
+  end
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

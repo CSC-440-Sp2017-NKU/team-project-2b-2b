@@ -20,6 +20,7 @@
  *= require fontello/css/fontello.css
  */
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+@import url("https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css");
 
 
 body {
@@ -749,8 +750,9 @@ div[class*="slider_shadow"]:before, div[class^="header_shadow"] {
 	margin-bottom: 10px;
 }
 .question-tab .tab a {
-	color: #fff;
+	color: #000;
 	font-size: 15px;
+    background: none;
 	font-weight: normal;
   text-decoration: none;
 	
@@ -1348,7 +1350,7 @@ div[class*="slider_shadow"]:before, div[class^="header_shadow"] {
 	margin-right: 0;
 	border-right: none !important;
 }
-.block-stats-1,.block-stats-2,.block-stats-3,.block-stats-4 {
+.block-stats-1,.block-stats-2,.block-stats-3,.block-stats-4, .block-stats {
 	text-align: center;
     color: #494f57;
 }
@@ -3850,7 +3852,7 @@ h2 [class^="icons-"], h2 [class*=" icons-"] {
 	overflow: hidden;
 	height: 100%;
 	position: relative;
-	border-bottom: 2px solid #e5e5e5;
+	border-bottom: 2px solid #B3B3B3;
 }
 .tab a {
     float: left;
@@ -3864,6 +3866,7 @@ h2 [class^="icons-"], h2 [class*=" icons-"] {
 .tab a.current {
 	cursor: default;
 	border-color: #e5e5e5;
+    background: #B3B3B3;
 }
 .tabs-vertical .tab a {
 	border: 1px solid rgba(0,0,0,0);
@@ -5411,3 +5414,27 @@ a.question-type-main,a.question-report {
   color: #000;
 
 }
+.users-head {
+  font-weight: bold;
+  font-size: 14px;
+}
+select.input-sm {
+  line-height: 15px;
+}
+div.dataTables_wrapper div.dataTables_filter label {
+  text-align: right;
+}
+.input-sm {
+  height: 17px;
+}
+.hiddenRow {
+  padding: 0 !important;
+}
+.btn-yellow {
+  background: #FFC72C;
+  border: #EDB52C;
+}
+.user-bio {
+  margin-bottom: 30px;
+}
+

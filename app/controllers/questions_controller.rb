@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :edit, :update, :destroy, :upvote, :downvote]
+  before_action :set_question, only: [:show, :edit, :update, :destroy, :upvote, :downvote, :unupvote, :undownvote]
   before_action :authenticate_user!
-  before_action :require_same_user, only: [:edit, :update, :destroy]
+  before_action :require_same_user, only: [:edit, :destroy]
   # GET /questions
   # GET /questions.json
 
@@ -69,10 +69,22 @@ class QuestionsController < ApplicationController
     flash[:notice] = 'Question successfully upvoted'
   end
 
+  def unupvote
+    @question.unliked_by current_user
+    redirect_to :back
+    flash[:notice] = 'Upvote was successfully removed'
+  end
+
   def downvote
     current_user.dislikes @question
     redirect_to :back
     flash[:danger] = 'Question successfully downvoted'
+  end
+
+  def undownvote
+    @question.undisliked_by current_user
+    redirect_to :back
+    flash[:notice] = 'Downvote was successfully removed'
   end
 
 private
@@ -83,7 +95,7 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def question_params
-    params.require(:question).permit(:title, :description, :image)
+    params.require(:question).permit(:title, :description, :course_id, :image)
   end
 
   def require_same_user

@@ -42,7 +42,7 @@
 						<div class="question-details">
 							<span class="question-answered question-answered-done"><i class="icon-ok"></i>solved</span>
 						</div>
-						<span class="question-category"><a href="<%= course_path(@question.course) %>"><i class="icon-folder-close"></i>CSC 440</a></span>
+						<span class="question-category"><a href="<%= course_path(@question.course) %>"><i class="icon-folder-close"></i><%= @question.course.short_title %></a></span>
 						<span class="question-date"><i class="icon-time"></i>Created <%= @question.created_at.strftime("%b %e %Y") %></span>
 						<span class="question-comment"><a href="#bio"><i class="icon-comment"></i><%= pluralize(@question.answers.count, "Answer") %></a></span>
             <% @question_vote_difference = @question.get_upvotes.size - @question.get_downvotes.size %>
@@ -57,13 +57,25 @@
 						<ul class="single-question-vote">
               <% if @question.user != current_user %>
                   <li>
-                    <%= link_to(dislike_question_path(@question), method: :put, :remote=>true, class:'single-question-vote-down vote' + ((current_user.voted_down_on? @question) ? ' red' : '')) do %>
-                        <i class="icon-thumbs-down"></i>
+                    <% if current_user.voted_down_on? @question %>
+                      <%= link_to(undislike_question_path(@question), method: :put, class:'single-question-vote-down vote' + ((current_user.voted_down_on? @question) ? ' red' : '')) do %>
+                          <i class="icon-thumbs-down"></i>
+                      <% end %>
+                    <% else %>
+                        <%= link_to(dislike_question_path(@question), method: :put, class:'single-question-vote-down vote' + ((current_user.voted_down_on? @question) ? ' red' : '')) do %>
+                            <i class="icon-thumbs-down"></i>
+                        <% end %>
                     <% end %>
                   </li>
                   <li>
-                    <%= link_to(like_question_path(@question), method: :put, :remote=>true, class:'single-question-vote-up vote' + ((current_user.voted_up_on? @question) ? ' green' : '')) do %>
-                        <i class="icon-thumbs-up"></i>
+                    <% if current_user.voted_up_on? @question %>
+                      <%= link_to(unlike_question_path(@question), method: :put, class:'single-question-vote-up vote' + ((current_user.voted_up_on? @question) ? ' green' : '')) do %>
+                          <i class="icon-thumbs-up"></i>
+                      <% end %>
+                    <% else %>
+                        <%= link_to(like_question_path(@question), method: :put, class:'single-question-vote-up vote' + ((current_user.voted_up_on? @question) ? ' green' : '')) do %>
+                            <i class="icon-thumbs-up"></i>
+                        <% end %>
                     <% end %>
                   </li>
               <% else %>
@@ -104,8 +116,16 @@
 					                	<div class="comment-vote">
 						                	<ul class="question-vote">
                                 <% if answer.user != current_user %>
-									                <%= link_to '', like_answer_path(answer), method: :put, :remote=>true, class:'question-vote-up' + ((current_user.voted_up_on? answer) ? ' green' : '') %>
-									                <%= link_to '', dislike_answer_path(answer), method: :put, :remote=>true, class:'question-vote-down' + ((current_user.voted_down_on? answer) ? ' red' : '') %>
+                                  <% if current_user.voted_up_on? answer %>
+									                  <%= link_to '', unlike_answer_path(answer), method: :put, class:'question-vote-up' + ((current_user.voted_up_on? answer) ? ' green' : '') %>
+                                  <% else %>
+                                    <%= link_to '', like_answer_path(answer), method: :put, class:'question-vote-up' + ((current_user.voted_up_on? answer) ? ' green' : '') %>
+                                  <% end %>
+                                  <% if current_user.voted_down_on? answer %>
+									                  <%= link_to '', undislike_answer_path(answer), method: :put, class:'question-vote-down' + ((current_user.voted_down_on? answer) ? ' red' : '') %>
+                                  <% else %>
+                                    <%= link_to '', dislike_answer_path(answer), method: :put, class:'question-vote-down' + ((current_user.voted_down_on? answer) ? ' red' : '') %>
+                                  <% end %>
                                 <% else %>
                                   <div class="question-vote-up gray"></div>
                                   <div class="question-vote-down gray"></div>

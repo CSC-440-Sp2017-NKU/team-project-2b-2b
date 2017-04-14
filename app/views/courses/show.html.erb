@@ -22,11 +22,13 @@
         <div class="tabs-warp question-tab">
           <ul class="tabs">
             <li class="tab"><a href="#" class="current">Recent Questions</a></li>
+            <li class="tab"><a href="#" class="current">Most Responses</a></li>
+            <li class="tab"><a href="#" class="current">No Answers</a></li>
+            <li class="tab"><a href="#" class="current">Users</a></li>
           </ul>
           <div class="row" align="center"><%= will_paginate @questions, :param_name => 'questions_page' %></div>
 
-          <div id="tab1" class="tab-inner-warp">
-
+          <div class="tab-inner-warp">
             <div class="tab-inner">
               <% @questions.each do |question| %>
                   <article class="question question-index question-type-normal">
@@ -65,37 +67,127 @@
               </div>
             </div>
           </div>
-        </div><!-- End page-content (questions) -->
-        <div class="page-content">
-          <div class="user-stats">
-            <div class="user-stats-head">
-              <div class="block-stats-1 stats-head">Name</div>
-              <div class="block-stats-2 stats-head">Questions</div>
-              <div class="block-stats-3 stats-head">Answers</div>
-              <div class="block-stats-4 stats-head">Reputation</div>
-            </div>
-            <% @users.each do |user| %>
-              <div class="user-stats-item">
-                <div class="block-stats-1"><%= link_to user.name, user_path(user) %></div>
-                <div class="block-stats-2"><%= user.questions.count %></div>
-                <div class="block-stats-3"><%= user.answers.count %></div>
-                <div class="block-stats-4">100</div>
+          <div class="tab-inner-warp">
+            <div class="tab-inner">
+              <% @questions.sort_by { |obj| obj.answers.count}.reverse.each do |question| %>
+                  <article class="question question-index question-type-normal">
+                    <h2>
+                      <%= link_to question.title, question_path(question) %>
+                    </h2>
+                    <% if current_user.admin? %>
+                        <a class="question-type-main" href="<%= edit_question_path(question) %>"><i class="icon-pencil"></i>Edit</a>
+                        <%= link_to(question_path(question), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'question-report red-bg') do %>
+                            <i class="icon-trash"></i>Delete
+                        <% end %>
+                    <% end %>
+
+                    <% if current_user == question.user %>
+                        <a class="question-report" href="<%= edit_question_path(question) %>"><i class="icon-pencil"></i>Edit</a>
+                    <% end %>
+                    <div class="question-author">
+                      <a href="<%= user_path(question.user.id) %>"  original-title="<%= question.user.name %>" class="question-author-img"><span></span><img alt="" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-48.png"></a>
+                    </div>
+                    <div class="question-inner">
+                      <div class="clearfix"></div>
+                      <p class="question-desc"><%= truncate(question.description, length: 300) %></p>
+                      <div class="question-details">
+                        <span class="question-answered question-answered-done"><i class="icon-ok"></i>solved</span>
+                      </div>
+                      <span class="question-category"><a href="<%= course_path(question.course) %>"><i class="icon-folder-close"></i><%= question.course.short_title %></a></span>
+                      <span class="question-date"><i class="icon-time"></i>Updated <%= question.updated_at.strftime("%b %e %Y %l:%M %p") %></span>
+                      <span class="question-comment"><a href="<%= question_path(question) %>#bio" class="smoothScroll"><i class="icon-comment"></i><%= pluralize(question.answers.count, "Answer") %></a></span>
+                      <span class="question-view"><i class="icon-user"></i><%= question.user.name %></span>
+                      <div class="clearfix"></div>
+                    </div>
+                  </article>
+              <% end %>
+              <div align="center">
+                <%= will_paginate @questions, :param_name => 'questions_page' %>
               </div>
-            <% end %>
-          </div><!-- End user-stats -->
-        </div><!-- End page content (users) -->
+            </div>
+          </div>
+          <div class="tab-inner-warp">
+            <div class="tab-inner">
+              <% @questions.select { |q| q.answers.count == 0 }.each do |question| %>
+                  <article class="question question-index question-type-normal">
+                    <h2>
+                      <%= link_to question.title, question_path(question) %>
+                    </h2>
+                    <% if current_user.admin? %>
+                        <a class="question-type-main" href="<%= edit_question_path(question) %>"><i class="icon-pencil"></i>Edit</a>
+                        <%= link_to(question_path(question), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'question-report red-bg') do %>
+                            <i class="icon-trash"></i>Delete
+                        <% end %>
+                    <% end %>
+
+                    <% if current_user == question.user %>
+                        <a class="question-report" href="<%= edit_question_path(question) %>"><i class="icon-pencil"></i>Edit</a>
+                    <% end %>
+                    <div class="question-author">
+                      <a href="<%= user_path(question.user.id) %>"  original-title="<%= question.user.name %>" class="question-author-img"><span></span><img alt="" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-48.png"></a>
+                    </div>
+                    <div class="question-inner">
+                      <div class="clearfix"></div>
+                      <p class="question-desc"><%= truncate(question.description, length: 300) %></p>
+                      <div class="question-details">
+                        <span class="question-answered question-answered-done"><i class="icon-ok"></i>solved</span>
+                      </div>
+                      <span class="question-category"><a href="<%= course_path(question.course) %>"><i class="icon-folder-close"></i>CSC 440</a></span>
+                      <span class="question-date"><i class="icon-time"></i>Updated <%= question.updated_at.strftime("%b %e %Y %l:%M %p") %></span>
+                      <span class="question-comment"><a href="<%= question_path(question) %>#bio" class="smoothScroll"><i class="icon-comment"></i><%= pluralize(question.answers.count, "Answer") %></a></span>
+                      <span class="question-view"><i class="icon-user"></i><%= question.user.name %></span>
+                      <div class="clearfix"></div>
+                    </div>
+                  </article>
+              <% end %>
+              <div align="center">
+                <%= will_paginate @questions, :param_name => 'questions_page' %>
+              </div>
+            </div>
+          </div>
+          <div class="tab-inner-warp">
+            <div class="tab-inner">
+              <div class="page-content">
+                <table id="users-table" class= "table table-striped table-bordered"> <!-- bootstrap classes added by the uitheme widget -->
+                  <thead class="users-head">
+                  <tr>
+                    <th>Name</th>
+                    <th>Questions</th>
+                    <th class="filter-select filter-exact" data-placeholder="Pick a gender">Answers</th>
+                    <th>Reputation</th>
+                  </tr>
+                  </thead>
+                  <tfoot class="users-head">
+                  <tr>
+                    <th>Name</th>
+                    <th>Questions</th>
+                    <th>Answers</th>
+                    <th>Reputation</th>
+                  </tr>
+                  </tfoot>
+                  <tbody>
+                  <% @users.each do |user| %>
+                      <tr><td><%= link_to user.name, user_path(user) %></td><td><%= user.questions.count %></td><td><%= user.answers.count %></td><td>100</td></tr>
+                  <% end %>
+                  </tbody>
+                </table>
+              </div><!-- End page content (users) -->
+            </div>
+          </div>
+        </div><!-- End page-content (questions) -->
+
       </div><!-- End main -->
       <aside class="col-md-3 sidebar">
         <div class="widget widget_highest_points">
-          <h3 class="widget_title">Top Users</h3>
+          <h3 class="widget_title">Top Users in <%= @course.short_title %></h3>
           <ul>
-            <% @users.each do |user| %>
+            <% @users.sort_by { |u| u.reputation }.reverse.each do |user| %>
               <li>
                 <div class="author-img">
                   <a href="#"><img width="60" height="60" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-48.png" alt=""></a>
                 </div>
                 <h6><a href="#"><%= user.name %></a></h6>
-                <span class="comment">3000 Points</span>
+                <span class="comment"><%= user.reputation %> Points</span>
               </li>
             <% end %>
           </ul>
@@ -112,16 +204,21 @@
                   <div class="clear"></div><span><%= q.updated_at.strftime("%b %e %Y %l:%M %p") %></span>
                 </li>
             <% end %>
-
           </ul>
         </div>
-
       </aside><!-- End sidebar -->
     </div><!-- End row -->
   </section><!-- End container -->
 </div><!-- End wrap -->
 
 <div class="go-up"><i class="icon-chevron-up"></i></div>
+
+<script>
+  $(document).ready(function() {
+    $('#users-table').DataTable();
+  } );
+</script>
+
 
 
 

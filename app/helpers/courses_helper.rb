@@ -18,4 +18,8 @@ module CoursesHelper
     dept_courses.each {|course| count += course.questions.count}
     count
   end
+
+  def short_title(id)
+    current_user.courses.select { |c| c.id == id }.each {|c| c.prefix + ' ' + c.number.to_s }
+  end
 end

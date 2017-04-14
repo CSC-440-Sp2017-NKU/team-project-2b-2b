@@ -4,10 +4,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : "NKUNet" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "NKUNet" %>">
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => 'reload' %>
+
+    <%= stylesheet_link_tag "application", media: "all" %>
+    <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
-  	
+    <link rel="stylesheet" src="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css" />
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+
 		<%= render 'application/favicon' %>
   </head>
   <body>

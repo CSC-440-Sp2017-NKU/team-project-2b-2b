@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :set_answer, only: [:edit, :update, :destroy, :upvote, :downvote]
+  before_action :set_answer, only: [:edit, :update, :destroy, :upvote, :downvote, :unupvote, :undownvote]
   before_action :authenticate_user!
   before_action :require_same_user, only: [:edit, :update, :destroy]
 
@@ -59,10 +59,22 @@ class AnswersController < ApplicationController
     flash[:notice] = 'Answer successfully upvoted'
   end
 
+  def unupvote
+    @answer.unliked_by current_user
+    redirect_to :back
+    flash[:notice] = 'Vote was successfully removed'
+  end
+
   def downvote
     current_user.dislikes @answer
     redirect_to :back
     flash[:danger] = 'Answer successfully downvoted'
+  end
+
+  def undownvote
+    @answer.undisliked_by current_user
+    redirect_to :back
+    flash[:notice] = 'Vote was successfully removed'
   end
 
   private

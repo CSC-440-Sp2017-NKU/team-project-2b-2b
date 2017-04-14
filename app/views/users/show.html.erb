@@ -1,3 +1,304 @@
-<h3>User</h3>
-<p>Name: <%= @user.name if @user.name %></p>
-<p>Email: <%= @user.email if @user.email %></p>
+<div class="breadcrumbs">
+  <section class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>User Profile: <%= @user.name %></h1>
+      </div>
+      <div class="col-md-12">
+        <div class="crumbs">
+          <%= link_to 'Home', root_path %>
+          <span class="crumbs-span">/</span>
+          <a href="#">Users</a>
+          <span class="crumbs-span">/</span>
+          <span class="current"><%= @user.name %></span>
+        </div>
+      </div>
+    </div><!-- End row -->
+  </section><!-- End container -->
+</div><!-- End breadcrumbs -->
+
+<section class="container main-content">
+  <div class="row">
+    <div class="col-md-9">
+      <div class="row">
+        <div>
+          <div class="col-md-12">
+            <div class="page-content user-bio">
+              <h2>About <%= @user.name %></h2>
+              <div class="user-profile-img"><img width="60" height="60" src="http://placehold.it/60x60/FFF/444" alt="admin"></div>
+              <div class="ul_list ul_list-icon-ok about-user">
+                <ul>
+                  <li><i class="icon-plus"></i>Registered : <span><%= @user.created_at.strftime("%b %e, %Y") %></span></li>
+                </ul>
+              </div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu. Fusce viverra neque at purus laoreet consequat. Vivamus vulputate posuere nisl quis consequat. Donec congue commodo mi, sed commodo velit fringilla ac. Fusce placerat venenatis mi. Pellentesque habitant morbi tristique senectus et netus et malesuada .</p>
+              <div class="clearfix"></div>
+            </div><!-- End page-content -->
+          </div><!-- End col-md-12 -->
+          <div class="col-md-12">
+            <div class="tabs-warp question-tab">
+              <ul class="tabs">
+                <li class="tab"><a href="#" class="current">Questions</a></li>
+                <li class="tab"><a href="#" class="current">Answers</a></li>
+                <li class="tab"><a href="#" class="current">Courses</a></li>
+              </ul>
+              <div class="row" align="center"><%= will_paginate @questions %></div>
+
+              <div class="tab-inner-warp">
+                <div class="tab-inner">
+                  <% @user.questions.each do |question| %>
+                      <article class="question question-index question-type-normal">
+                        <h2>
+                          <%= link_to question.title, question_path(question) %>
+                        </h2>
+                        <% if current_user.admin? %>
+                            <a class="question-type-main" href="<%= edit_question_path(question) %>"><i class="icon-pencil"></i>Edit</a>
+                            <%= link_to(question_path(question), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'question-report red-bg') do %>
+                                <i class="icon-trash"></i>Delete
+                            <% end %>
+                        <% end %>
+
+                        <% if current_user == question.user %>
+                            <a class="question-report" href="<%= edit_question_path(question) %>"><i class="icon-pencil"></i>Edit</a>
+                        <% end %>
+                        <div class="question-author">
+                          <a href="<%= user_path(question.user.id) %>"  original-title="<%= question.user.name %>" class="question-author-img"><span></span><img alt="" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-48.png"></a>
+                        </div>
+                        <div class="question-inner">
+                          <div class="clearfix"></div>
+                          <p class="question-desc"><%= truncate(question.description, length: 300) %></p>
+                          <div class="question-details">
+                            <span class="question-answered question-answered-done"><i class="icon-ok"></i>solved</span>
+                          </div>
+                          <span class="question-category"><a href="<%= course_path(question.course) %>"><i class="icon-folder-close"></i>CSC 440</a></span>
+                          <span class="question-date"><i class="icon-time"></i>Updated <%= question.updated_at.strftime("%b %e %Y %l:%M %p") %></span>
+                          <span class="question-comment"><a href="<%= question_path(question) %>#bio" class="smoothScroll"><i class="icon-comment"></i><%= pluralize(question.answers.count, "Answer") %></a></span>
+                          <span class="question-view"><i class="icon-user"></i><%= question.user.name %></span>
+                          <div class="clearfix"></div>
+                        </div>
+                      </article>
+                  <% end %>
+                  <div align="center">
+                    <%= will_paginate @questions, :param_name => 'questions_page' %>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-inner-warp">
+                <div class="tab-inner">
+                  <% @user.answers.each do |answer| %>
+                      <article class="question question-index question-type-normal">
+                        <h2>
+                          <%= link_to answer.question.title, question_path(answer.question) %>
+                        </h2>
+
+                        <div class="question-author">
+                          <a href="<%= user_path(answer.question.user.id) %>"  original-title="<%= answer.question.user.name %>" class="question-author-img"><span></span><img alt="" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-48.png"></a>
+                        </div>
+                        <div class="question-inner">
+                          <div class="clearfix"></div>
+                          <p class="question-desc"><%= truncate(answer.content, length: 300) %></p>
+                          <div class="question-details">
+                            <span class="question-answered question-answered-done"><i class="icon-ok"></i>solved</span>
+                          </div>
+                          <span class="question-category"><a href="<%= course_path(answer.question.course) %>"><i class="icon-folder-close"></i><%= answer.question.course.short_title %></a></span>
+                          <span class="question-date"><i class="icon-time"></i>Updated <%= answer.question.updated_at.strftime("%b %e %Y %l:%M %p") %></span>
+                          <span class="question-comment"><a href="<%= question_path(answer.question) %>#bio" class="smoothScroll"><i class="icon-comment"></i><%= pluralize(answer.question.answers.count, "Answer") %></a></span>
+                          <span class="question-view"><i class="icon-user"></i><%= answer.question.user.name %></span>
+                          <div class="clearfix"></div>
+                        </div>
+                      </article>
+                  <% end %>
+                  <div align="center">
+                    <%= will_paginate @answers %>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-inner-warp">
+                <div class="tab-inner">
+                  <div class="page-content">
+                    <table id="courses-table" class= "table table-striped table-bordered table-hover table-responsive"> <!-- bootstrap classes added by the uitheme widget -->
+                      <thead class="users-head">
+                      <tr>
+                        <th>Department</th>
+                        <th>Number</th>
+                        <th>Title</th>
+                        <th>Students</th>
+                      </tr>
+                      </thead>
+                      <tfoot class="users-head">
+                      <tr>
+                        <th>Department</th>
+                        <th>Number</th>
+                        <th>Title</th>
+                        <th>Students</th>
+                      </tr>
+                      </tfoot>
+                      <tbody>
+                      <% @user.courses.each do |course| %>
+                          <tr>
+                            <td><%= course.prefix %></td>
+                            <td><%= course.number %></td>
+                            <td><%= link_to course.title, course_path(course) %></td>
+                            <td><%= course.users.count %></td>
+                          </tr>
+                      <% end %>
+                      </tbody>
+                    </table>
+                  </div><!-- End page content (users) -->
+                  <div align="center">
+                    <%= will_paginate @questions, :param_name => 'questions_page' %>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End page-content (questions) -->
+          </div><!-- End col-md-12 -->
+        </div><!-- End user-profile -->
+      </div><!-- End row -->
+    </div><!-- End main -->
+    <aside class="col-md-3 sidebar">
+      <div class="widget widget_stats">
+        <h3 class="widget_title">Stats</h3>
+        <div class="ul_list ul_list-icon-ok">
+          <ul>
+            <li><i class="icon-question-sign"></i>Questions<span> ( <span><%= @user.questions.count %></span> ) </span></li>
+            <li><i class="icon-comment"></i>Answers<span> ( <span><%= @user.answers.count %></span> ) </span></li>
+            <li><i class="icon-heart"></i>Reputation<span> ( <span><%= @user.reputation %></span> ) </span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="widget widget_social">
+        <h3 class="widget_title">Find Us</h3>
+        <ul>
+          <li class="rss-subscribers">
+            <a href="#" target="_blank">
+              <strong>
+                <i class="icon-rss"></i>
+                <span>Subscribe</span><br>
+                <small>To RSS Feed</small>
+              </strong>
+            </a>
+          </li>
+          <li class="facebook-fans">
+            <a href="#" target="_blank">
+              <strong>
+                <i class="social_icon-facebook"></i>
+                <span>5,000</span><br>
+                <small>People like it</small>
+              </strong>
+            </a>
+          </li>
+          <li class="twitter-followers">
+            <a href="#" target="_blank">
+              <strong>
+                <i class="social_icon-twitter"></i>
+                <span>3,000</span><br>
+                <small>Followers</small>
+              </strong>
+            </a>
+          </li>
+          <li class="youtube-subs">
+            <a href="#" target="_blank">
+              <strong>
+                <i class="icon-play"></i>
+                <span>1,000</span><br>
+                <small>Subscribers</small>
+              </strong>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="widget widget_login">
+        <h3 class="widget_title">Login</h3>
+        <div class="form-style form-style-2">
+          <form>
+            <div class="form-inputs clearfix">
+              <p class="login-text">
+                <input type="text" value="Username" onfocus="if (this.value == 'Username') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Username';}">
+                <i class="icon-user"></i>
+              </p>
+              <p class="login-password">
+                <input type="password" value="Password" onfocus="if (this.value == 'Password') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Password';}">
+                <i class="icon-lock"></i>
+                <a href="#">Forget</a>
+              </p>
+            </div>
+            <p class="form-submit login-submit">
+              <input type="submit" value="Log in" class="button color small login-submit submit">
+            </p>
+            <div class="rememberme">
+              <label><input type="checkbox" checked="checked"> Remember Me</label>
+            </div>
+          </form>
+          <ul class="login-links login-links-r">
+            <li><a href="#">Register</a></li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+
+      <div class="widget widget_highest_points">
+        <h3 class="widget_title">Highest points</h3>
+        <ul>
+          <li>
+            <div class="author-img">
+              <a href="#"><img width="60" height="60" src="http://placehold.it/60x60/FFF/444" alt=""></a>
+            </div>
+            <h6><a href="#">admin</a></h6>
+            <span class="comment">12 Points</span>
+          </li>
+          <li>
+            <div class="author-img">
+              <a href="#"><img width="60" height="60" src="http://placehold.it/60x60/FFF/444" alt=""></a>
+            </div>
+            <h6><a href="#">vbegy</a></h6>
+            <span class="comment">10 Points</span>
+          </li>
+          <li>
+            <div class="author-img">
+              <a href="#"><img width="60" height="60" src="http://placehold.it/60x60/FFF/444" alt=""></a>
+            </div>
+            <h6><a href="#">ahmed</a></h6>
+            <span class="comment">5 Points</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="widget widget_tag_cloud">
+        <h3 class="widget_title">Tags</h3>
+        <a href="#">projects</a>
+        <a href="#">Portfolio</a>
+        <a href="#">Wordpress</a>
+        <a href="#">Html</a>
+        <a href="#">Css</a>
+        <a href="#">jQuery</a>
+        <a href="#">2code</a>
+        <a href="#">vbegy</a>
+      </div>
+
+      <div class="widget">
+        <h3 class="widget_title">Recent Questions</h3>
+        <ul class="related-posts">
+          <li class="related-item">
+            <h3><a href="#">This is my first Question</a></h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <div class="clear"></div><span>Feb 22, 2014</span>
+          </li>
+          <li class="related-item">
+            <h3><a href="#">This Is My Second Poll Question</a></h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <div class="clear"></div><span>Feb 22, 2014</span>
+          </li>
+        </ul>
+      </div>
+
+    </aside><!-- End sidebar -->
+  </div><!-- End row -->
+</section><!-- End container -->
+
+<script>
+    $(document).ready(function() {
+        $('#courses-table').DataTable();
+    } );
+</script>

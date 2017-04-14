@@ -4,15 +4,17 @@ class UsersController < ApplicationController
   before_action :authorize_admin, only: [:new, :create, :destroy]
 
   def index
-    @users = User.all
+    @users = User.all=
     authorize User
   end
 
   def show
     @user = User.find(params[:id])
+    @questions = @user.questions.paginate(page: params[:page], per_page: 5).order('updated_at DESC')
+    @answers = @user.answers.paginate(page: params[:page], per_page: 5).order('updated_at DESC')
     authorize current_user
   end
-  
+
   def create
     @user = User.new(user_params)
     authorize @user  
