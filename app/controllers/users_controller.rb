@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :authorize_admin, only: [:new, :create, :destroy]
 
   def index
-    @users = User.all=
+    @users = User.all
     authorize User
   end
 
@@ -24,9 +24,9 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     authorize @user
     if @user.update_attributes(secure_params)
-      redirect_to users_path, :notice => "User updated."
+      redirect_to root_path, :notice => "User updated."
     else
-      redirect_to users_path, :alert => "Unable to update user."
+      redirect_to root_path, :alert => "Unable to update user."
     end
   end
 
@@ -40,7 +40,8 @@ class UsersController < ApplicationController
   private
 
   def secure_params
-    params.require(:user).permit(:role)
+
+    params.require(:user).permit(course_ids: [])
   end
   
   def authorize_admin

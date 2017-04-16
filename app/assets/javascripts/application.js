@@ -29,5 +29,6 @@
 //= require jquery.tablesorter.min.js
 //= require jquery-latest.js
 //= require jquery.tipsy.js
+//= require sol.js
 //= require tabs.js
 //= require tags.js

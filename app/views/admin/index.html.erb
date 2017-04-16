@@ -15,6 +15,7 @@
                   <th>Name</th>
                   <th>Email</th>
                   <th>Courses</th>
+                  <th>Edit</th>
                   <th>Delete</th>
                 </tr>
                 </thead>
@@ -23,6 +24,7 @@
                   <th>Name</th>
                   <th>Email</th>
                   <th>Courses</th>
+                  <th>Edit</th>
                   <th>Delete</th>
                 </tr>
                 </tfoot>
@@ -31,9 +33,32 @@
                     <tr>
                       <td><%= link_to user.name, user_path(user) %></td>
                       <td><%= mail_to user.email  %></td>
-                      <td><% user.courses.each do |c| %> <%= c.short_title + ' ' %> <% end %></td>
+                      <td><% user.courses.each do |c| %><%= link_to c.short_title + ' ', course_path(c) %> <% end %></td>
+                      <td><%= link_to("Edit user", edit_user_path(user), :class => 'button-xs btn-primary', "data-toggle" => "modal", "data-target" => "#editUser" + user.id.to_s) unless user == current_user %></td>
                       <td><%= link_to("Delete user", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'button-xs btn-danger') unless user == current_user %></td>
                     </tr>
+                    <!-- Modal -->
+                    <div class="modal fade" id="editUser<%= user.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h2 class="modal-title" id="exampleModalLabel"><%= user.name %></h2>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <%= form_for user do |f| %>
+                                <%= f.collection_select :course_ids, @courses, :id, :full_title,{}, {:multiple => true, :class => "chosen-select"} %>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <%= f.submit :class => "btn-sm btn-success small submit" %>
+                          </div>
+                            <% end %>
+                        </div>
+                      </div>
+                    </div>
                 <% end %>
                 </tbody>
               </table>
@@ -83,5 +108,7 @@
     $(document).ready(function() {
         $('#users-table').DataTable();
         $('#courses-table').DataTable();
-    } );
+        $(".chosen-select").chosen({width: "95%"});
+    });
+
 </script>

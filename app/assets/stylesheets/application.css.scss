@@ -14,10 +14,12 @@
  *= require_self
  *= require base.css
  *= require lists.css
+ *= require sol.css
  *= require bootstrap.min.css
  *= require prettyPhoto.css
  *= require font-awesome/css/font-awesome.min.css
  *= require fontello/css/fontello.css
+
  */
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 @import url("https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css");
@@ -5437,4 +5439,20 @@ div.dataTables_wrapper div.dataTables_filter label {
 .user-bio {
   margin-bottom: 30px;
 }
+.modal-header .close {
+  margin-top: -22px;
+}
 
+.sol-selection-container {
+  left: 17px !important;
+}
+input[type="checkbox"] {
+  float: left;
+}
+.sol-label {
+  padding: 13px 10px;
+}
+.sol-label-text {
+  padding-left: 30px;
+  padding-top: 4px;
+}
