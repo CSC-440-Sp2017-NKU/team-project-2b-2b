@@ -34,14 +34,13 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     authorize user
     user.destroy
-    redirect_to users_path, :notice => "User deleted."
+    redirect_to root_path, :notice => "User deleted."
   end
 
   private
 
   def secure_params
-
-    params.require(:user).permit(course_ids: [])
+    params.require(:user).permit(:name, :email, :password, course_ids: [])
   end
   
   def authorize_admin

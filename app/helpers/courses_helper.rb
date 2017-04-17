@@ -1,3 +1,5 @@
+require 'set'
+
 module CoursesHelper
   def last_activity(course)
     questions = course.questions
@@ -8,9 +10,9 @@ module CoursesHelper
   end
 
   def user_count(dept_courses)
-    count = 0
-    dept_courses.each {|course| count += course.users.count}
-    count
+    users = Set.new
+    dept_courses.each { |course| users.merge course.users }
+    users.count
   end
 
   def question_count(dept_courses)

@@ -17,6 +17,18 @@ class User < ApplicationRecord
     rep += questions.count * 10 + answers.count * 15 + sign_in_count * 5
     rep
   end
+
+  def first_name
+    name.split(' ')[0]
+  end
+
+  def last_name
+    name.split(' ')[1]
+  end
+
+  def email_prefix
+    email.split('@')[0]
+  end
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

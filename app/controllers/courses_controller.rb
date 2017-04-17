@@ -7,7 +7,7 @@ class CoursesController < ApplicationController
     @courses = Course.all
     @depts = []
     @depts = @courses.uniq.pluck(:prefix)
-    @top_users = User.all.sort_by(&:reputation).reverse[0..4]
+    @top_users = User.all.reject { |u| u.admin? }.sort_by(&:reputation).reverse[0..4]
   end
 
   # GET /courses/1
