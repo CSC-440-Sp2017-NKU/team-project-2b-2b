@@ -145,19 +145,28 @@
       <div class="modal-body">
         <div class="authform">
           <%= form_for(Course.new) do |f| %>
-              <h3>Sign up</h3>
-              <div class="form-group">
-                <%= f.label :prefix %>
-                <%= f.text_field :prefix, :autofocus => true, class: 'form-control' %>
-              </div>
-              <div class="form-group">
-                <%= f.label :number %>
-                <%= f.text_field :number, class: 'form-control' %>
-              </div>
-              <div class="form-group">
-                <%= f.label :title %>
-                <%= f.text_field :title, class: 'form-control' %>
-              </div>
+              <h3>Course Details</h3>
+              <fieldset>
+                <div class="form-group">
+                  <%= f.label :prefix %>
+                  <%= f.text_field :prefix, :autofocus => true, class: 'form-control' %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :number %>
+                  <%= f.text_field :number, class: 'form-control' %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :title %>
+                  <%= f.text_field :title, class: 'form-control' %>
+                </div>
+              </fieldset>
+              <h3>Students</h3>
+              <fieldset>
+                <div class="form-group">
+                  <%= f.collection_select :user_ids, @users, :id, :name,{}, {:multiple => true, :class => "chosen-select"} %>
+                </div>
+              </fieldset>
+
               <%= f.submit 'Add Course', :class => 'button color btn-block add-course' %>
           <% end %>
         </div>
