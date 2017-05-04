@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170411221754) do
+ActiveRecord::Schema.define(version: 20170504024106) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "question_id"
@@ -37,14 +37,15 @@ ActiveRecord::Schema.define(version: 20170411221754) do
   create_table "questions", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.integer  "user_id"
     t.integer  "course_id"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.integer  "solved",             default: 0
   end
 
   create_table "users", force: :cascade do |t|

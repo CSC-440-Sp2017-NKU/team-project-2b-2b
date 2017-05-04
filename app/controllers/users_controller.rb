@@ -40,7 +40,7 @@ class UsersController < ApplicationController
   private
 
   def secure_params
-    params.require(:user).permit(:name, :email, :password, course_ids: [])
+    params.require(:user).permit(:name, :email, :password, :role, course_ids: [])
   end
   
   def authorize_admin

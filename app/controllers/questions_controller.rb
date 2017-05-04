@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :edit, :update, :destroy, :upvote, :downvote, :unupvote, :undownvote]
+  before_action :set_question, only: [:show, :edit, :update, :destroy, :upvote, :downvote, :unupvote, :undownvote, :solve, :unsolve]
   before_action :authenticate_user!
   before_action :require_same_user, only: [:edit, :destroy]
   # GET /questions
@@ -85,6 +85,20 @@ class QuestionsController < ApplicationController
     @question.undisliked_by current_user
     redirect_to :back
     flash[:notice] = 'Downvote was successfully removed'
+  end
+
+  def solve
+    @question.solved = 1
+    @question.save
+    redirect_to :back
+    flash[:notice] = 'Question successfully marked as solved'
+  end
+
+  def unsolve
+    @question.solved = 0
+    @question.save
+    redirect_to :back
+    flash[:notice] = 'Question successfully marked as in progress'
   end
 
 private

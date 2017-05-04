@@ -24,6 +24,7 @@
             <li class="tab"><a href="#" class="current">Recent Questions</a></li>
             <li class="tab"><a href="#" class="current">Most Responses</a></li>
             <li class="tab"><a href="#" class="current">No Answers</a></li>
+            <li class="tab"><a href="#" class="current">Not Solved</a></li>
             <li class="tab"><a href="#" class="current">Users</a></li>
           </ul>
           <div class="row" align="center"><%= will_paginate @questions, :param_name => 'questions_page' %></div>
@@ -52,7 +53,7 @@
                       <div class="clearfix"></div>
                       <p class="question-desc"><%= truncate(question.description, length: 300) %></p>
                       <div class="question-details">
-                        <span class="question-answered question-answered-done"><i class="icon-ok"></i>solved</span>
+                        <span class="<%= question.solved == 'solved' ? 'question-answered question-answered-done' : 'question-answered' %>"><i class="<%= question.solved == 'solved' ? 'icon-ok' : 'icon-time' %>"></i><%= question.solved.titleize %></span>
                       </div>
                       <span class="question-category"><a href="<%= course_path(question.course) %>"><i class="icon-folder-close"></i>CSC 440</a></span>
                       <span class="question-date"><i class="icon-time"></i>Updated <%= question.updated_at.strftime("%b %e %Y %l:%M %p") %></span>
@@ -91,7 +92,7 @@
                       <div class="clearfix"></div>
                       <p class="question-desc"><%= truncate(question.description, length: 300) %></p>
                       <div class="question-details">
-                        <span class="question-answered question-answered-done"><i class="icon-ok"></i>solved</span>
+                        <span class="<%= question.solved == 'solved' ? 'question-answered question-answered-done' : 'question-answered' %>"><i class="<%= question.solved == 'solved' ? 'icon-ok' : 'icon-time' %>"></i><%= question.solved.titleize %></span>
                       </div>
                       <span class="question-category"><a href="<%= course_path(question.course) %>"><i class="icon-folder-close"></i><%= question.course.short_title %></a></span>
                       <span class="question-date"><i class="icon-time"></i>Updated <%= question.updated_at.strftime("%b %e %Y %l:%M %p") %></span>
@@ -130,7 +131,46 @@
                       <div class="clearfix"></div>
                       <p class="question-desc"><%= truncate(question.description, length: 300) %></p>
                       <div class="question-details">
-                        <span class="question-answered question-answered-done"><i class="icon-ok"></i>solved</span>
+                        <span class="<%= question.solved == 'solved' ? 'question-answered question-answered-done' : 'question-answered' %>"><i class="<%= question.solved == 'solved' ? 'icon-ok' : 'icon-time' %>"></i><%= question.solved.titleize %></span>
+                      </div>
+                      <span class="question-category"><a href="<%= course_path(question.course) %>"><i class="icon-folder-close"></i>CSC 440</a></span>
+                      <span class="question-date"><i class="icon-time"></i>Updated <%= question.updated_at.strftime("%b %e %Y %l:%M %p") %></span>
+                      <span class="question-comment"><a href="<%= question_path(question) %>#bio" class="smoothScroll"><i class="icon-comment"></i><%= pluralize(question.answers.count, "Answer") %></a></span>
+                      <span class="question-view"><i class="icon-user"></i><%= question.user.name %></span>
+                      <div class="clearfix"></div>
+                    </div>
+                  </article>
+              <% end %>
+              <div align="center">
+                <%= will_paginate @questions, :param_name => 'questions_page' %>
+              </div>
+            </div>
+          </div>
+          <div class="tab-inner-warp">
+            <div class="tab-inner">
+              <% @questions.select { |q| q.solved == 'in progress' }.each do |question| %>
+                  <article class="question question-index question-type-normal">
+                    <h2>
+                      <%= link_to question.title, question_path(question) %>
+                    </h2>
+                    <% if current_user.admin? %>
+                        <a class="question-type-main" href="<%= edit_question_path(question) %>"><i class="icon-pencil"></i>Edit</a>
+                        <%= link_to(question_path(question), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'question-report red-bg') do %>
+                            <i class="icon-trash"></i>Delete
+                        <% end %>
+                    <% end %>
+
+                    <% if current_user == question.user %>
+                        <a class="question-report" href="<%= edit_question_path(question) %>"><i class="icon-pencil"></i>Edit</a>
+                    <% end %>
+                    <div class="question-author">
+                      <a href="<%= user_path(question.user.id) %>"  original-title="<%= question.user.name %>" class="question-author-img"><span></span><img alt="" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-48.png"></a>
+                    </div>
+                    <div class="question-inner">
+                      <div class="clearfix"></div>
+                      <p class="question-desc"><%= truncate(question.description, length: 300) %></p>
+                      <div class="question-details">
+                        <span class="<%= question.solved == 'solved' ? 'question-answered question-answered-done' : 'question-answered' %>"><i class="<%= question.solved == 'solved' ? 'icon-ok' : 'icon-time' %>"></i><%= question.solved.titleize %></span>
                       </div>
                       <span class="question-category"><a href="<%= course_path(question.course) %>"><i class="icon-folder-close"></i>CSC 440</a></span>
                       <span class="question-date"><i class="icon-time"></i>Updated <%= question.updated_at.strftime("%b %e %Y %l:%M %p") %></span>

@@ -68,7 +68,8 @@
                           <div class="clearfix"></div>
                           <p class="question-desc"><%= truncate(question.description, length: 300) %></p>
                           <div class="question-details">
-                            <span class="question-answered question-answered-done"><i class="icon-ok"></i>solved</span>
+                            <span class="<%= question.solved == 'solved' ? 'question-answered question-answered-done' : 'question-answered' %>"><i class="<%= question.solved == 'solved' ? 'icon-ok' : 'icon-time' %>"></i><%= question.solved.titleize %></span>
+
                           </div>
                           <span class="question-category"><a href="<%= course_path(question.course) %>"><i class="icon-folder-close"></i>CSC 440</a></span>
                           <span class="question-date"><i class="icon-time"></i>Updated <%= question.updated_at.strftime("%b %e %Y %l:%M %p") %></span>
@@ -98,7 +99,7 @@
                           <div class="clearfix"></div>
                           <p class="question-desc"><%= truncate(answer.content, length: 300) %></p>
                           <div class="question-details">
-                            <span class="question-answered question-answered-done"><i class="icon-ok"></i>solved</span>
+                            <span class="<%= answer.question.solved == 'solved' ? 'question-answered question-answered-done' : 'question-answered' %>"><i class="<%= answer.question.solved == 'solved' ? 'icon-ok' : 'icon-time' %>"></i>solved</span>
                           </div>
                           <span class="question-category"><a href="<%= course_path(answer.question.course) %>"><i class="icon-folder-close"></i><%= answer.question.course.short_title %></a></span>
                           <span class="question-date"><i class="icon-time"></i>Updated <%= answer.question.updated_at.strftime("%b %e %Y %l:%M %p") %></span>
