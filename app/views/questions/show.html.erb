@@ -31,16 +31,25 @@
 					<% end %>
 					
 					<% if current_user == @question.user %>
-						<a class="question-report" href="<%= edit_question_path(@question) %>"><i class="icon-pencil"></i>Edit</a>
+              <a class="question-type-main" href="<%= edit_question_path(@question) %>"><i class="icon-pencil"></i>Edit</a>
+              <% if @question.solved == 'solved' %>
+                <%= link_to(unsolve_question_path(@question), method: :put, class:'question-report red-bg') do %>
+                  <i class="icon-ok-sign"></i><%= @question.solved.titleize %>
+                <% end %>
+              <% else %>
+                <%= link_to(solve_question_path(@question), method: :put, class:'question-report green-bg') do %>
+                  <i class="icon-time"></i><%= @question.solved.titleize %>
+                <% end %>
+              <% end %>
 					<% end %>
 					<div class="question-inner">
 						<div class="clearfix"></div>
 						<div class="question-desc">
 						  <p><%= @question.description %><p>
-              <%= link_to image_tag(@question.image.url(:thumb), class: 'media-object'), @question.image.url, target: '_blank' %>
+              <%= link_to image_tag(@question.image.url(:thumb), class: 'media-object'), @question.image.url, target: '_blank' if @question.image_file_name %>
             </div>
 						<div class="question-details">
-							<span class="question-answered question-answered-done"><i class="icon-ok"></i>solved</span>
+							<span class="<%= @question.solved == 'solved' ? 'question-answered question-answered-done' : 'question-answered' %>"><i class="<%= @question.solved == 'solved' ? 'icon-ok' : 'icon-time' %>"></i><%= @question.solved.titleize %></span>
 						</div>
 						<span class="question-category"><a href="<%= course_path(@question.course) %>"><i class="icon-folder-close"></i><%= @question.course.short_title %></a></span>
 						<span class="question-date"><i class="icon-time"></i>Created <%= @question.created_at.strftime("%b %e %Y") %></span>

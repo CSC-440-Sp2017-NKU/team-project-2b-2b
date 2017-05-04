@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  enum role: [:user, :vip, :admin]
+  enum role: [:user, :student, :admin, :registrar, :faculty]
   after_initialize :set_default_role, :if => :new_record?
   has_many :questions, dependent: :destroy
   has_many :answers, dependent: :destroy

@@ -5311,13 +5311,16 @@ a.question-type-main,a.question-report {
 	background-color: #2f3239;
 	text-decoration: none;
 }
+a.question-type-main {
+  right: 124px;
+}
 .display-block {
 	display: block !important;
 }
 .icon-trash {
 	margin-right: 5px;
 }
-.icon-pencil {
+.icon-pencil, .icon-ok-sign, .icon-time  {
 	margin-right: 3px;
 }
 .comment-reply {
@@ -5332,6 +5335,10 @@ a.question-type-main,a.question-report {
 .green {
     color: #338338 !important;
 }
+.green-bg:hover {
+  background-color: #338338 !important;
+}
+
 .gray {
     color: #a1a1a1 !important;
 }
@@ -5470,4 +5477,10 @@ input[type="checkbox"] {
 }
 .modal-header, .modal-footer, .modal-body {
   background: #eee;
+}
+
+@media (min-width: 768px) {
+  #quickSearch .modal-dialog {
+    width: 90% !important;
+  }
 }

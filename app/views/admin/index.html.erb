@@ -16,6 +16,7 @@
                   <th>Last</th>
                   <th>First</th>
                   <th>Email Prefix</th>
+                  <th>Role</th>
                   <th>Courses</th>
                   <th>Questions</th>
                   <th>Answers</th>
@@ -28,6 +29,7 @@
                   <th>Last</th>
                   <th>First</th>
                   <th>Email Prefix</th>
+                  <th>Role</th>
                   <th>Courses</th>
                   <th>Questions</th>
                   <th>Answers</th>
@@ -36,14 +38,15 @@
                 </tr>
                 </tfoot>
                 <tbody>
-                <% @users.select {|u| !u.admin? }.each do |user| %>
+                <% @users.each do |user| %>
                     <tr>
                       <td><%= link_to user.last_name, user_path(user) %></td>
                       <td><%= link_to user.first_name, user_path(user) %></td>
                       <td><%= mail_to user.email, user.email_prefix %></td>
-                      <td><% user.courses.each do |c| %><%= link_to c.short_title + (c == user.courses.last ? ' ' : ', '), course_path(c) %><% end %><%= link_to("Edit", edit_user_path(user), :class => 'button-xs btn-primary flt-rt', "data-toggle" => "modal", "data-target" => "#editUser" + user.id.to_s) unless user == current_user %></td>
+                      <td><%=  user.role.titleize %></td>
+                      <td><% user.courses.each do |c| %><%= link_to c.short_title + (c == user.courses.last ? ' ' : ', '), course_path(c) %><% end %></td>
                       <td><%= link_to user.questions.count, user %></td>
-                      <td><%= link_to user.questions.count, user %></td>
+                      <td><%= link_to user.answers.count, user %></td>
                       <td><%= link_to("Edit user", edit_user_path(user), :class => 'button-xs btn-primary', "data-toggle" => "modal", "data-target" => "#editUser" + user.id.to_s) unless user == current_user %></td>
                       <td><%= link_to("Delete user", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'button-xs btn-danger') unless user == current_user %></td>
                     </tr>
@@ -58,10 +61,28 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                            <%= form_for user do |f| %>
-                                <div class="form-group">
-                                  <%= f.collection_select :course_ids, @courses, :id, :full_title,{}, {:multiple => true, :class => "chosen-select"} %>
-                                </div>
+                            <%= form_for(user) do |f| %>
+                                <h3>User Details</h3>
+                                <fieldset>
+                                  <div class="form-group">
+                                    <%= f.label :name %>
+                                    <%= f.text_field :name, :autofocus => true, class: 'form-control' %>
+                                  </div>
+                                  <div class="form-group">
+                                    <%= f.label :email %>
+                                    <%= f.text_field :email, class: 'form-control' %>
+                                  </div>
+                                  <div class="form-group">
+                                    <%= f.label :role %>
+                                    <%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}, class: 'form-control') %>
+                                  </div>
+                                </fieldset>
+                                <h3>Courses</h3>
+                                <fieldset>
+                                  <div class="form-group">
+                                    <%= f.collection_select :course_ids, @courses, :id, :full_title,{}, {:multiple => true, :class => "chosen-select"} %>
+                                  </div>
+                                </fieldset>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -181,7 +202,7 @@
     $(document).ready(function() {
         $('#users-table').DataTable();
         $('#courses-table').DataTable();
-        $(".chosen-select").chosen({width: "95%"});
+
     });
 
 </script>

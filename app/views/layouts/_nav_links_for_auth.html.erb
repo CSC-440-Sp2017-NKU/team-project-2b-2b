@@ -1,11 +1,11 @@
 <% if user_signed_in? %>
-  <% if current_user.try(:user?) %>
+  <% if current_user.try(:user?) || current_user.try(:student?) || current_user.try(:faculty?) %>
     <li><%= link_to 'Forums', root_path %></li>
     <li><%= link_to 'Ask Question', new_question_path() %></li>
-    <li><%= link_to 'View Profile', user_path(current_user) %></li>
-    <li><%= link_to 'Edit Profile', edit_user_registration_path %></li>
+    <li><%= link_to 'My Profile', user_path(current_user) %></li>
+    <li><%= link_to("Users/Courses", '#', :class => '', "data-toggle" => "modal", "data-target" => "#quickSearch") %></li>
   <% end %>
-    <% if current_user.try(:admin?) %>
+    <% if current_user.try(:admin?) || current_user.try(:registrar?)  %>
       <li><%= link_to 'Admin Panel', admin_path %></li>
       <li><%= link_to 'Forums', courses_path %></li>
       <li><%= link_to 'Ask Question', new_question_path() %></li>

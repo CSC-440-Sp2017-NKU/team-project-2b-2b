@@ -14,6 +14,8 @@ Rails.application.routes.draw do
       put 'dislike', to: 'questions#downvote'
       put 'unlike', to: 'questions#unupvote'
       put 'undislike', to: 'questions#undownvote'
+      put 'solve', to: 'questions#solve'
+      put 'unsolve', to: 'questions#unsolve'
     end
   end
 

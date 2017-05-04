@@ -1,4 +1,5 @@
 class Question < ApplicationRecord
+  enum solved: ['in progress', 'solved']
   belongs_to :user
   has_many :answers, dependent: :destroy
   belongs_to :course
